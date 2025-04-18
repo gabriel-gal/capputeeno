@@ -1,19 +1,30 @@
-import { FilterType, PriorityType, Product, ProductsFetchResponse } from "@/@types/types"
+import { FilterType, PriorityType, ProductsFetchResponse } from "@/@types/types"
 import { useFilter } from "@/contexts/FilterContext"
 import { useQuery } from "@tanstack/react-query"
 import { useDeferredValue } from "react"
 import { products } from "@/lib/products"
 
-function sortProducts(products: any, priority: PriorityType) {
+interface typeProducts {
+    id: string;
+    price_in_cents: number;
+    sales: number;
+    created_at: Date;
+    name: string;
+    description: string;
+    image_url: string;
+    category: string;
+}
+
+function sortProducts(products: typeProducts[], priority: PriorityType) {
 
     if (priority === "higher-price") {
-        return products.sort((a: any, b: any) => b.price_in_cents - a.price_in_cents)
+        return products.sort((a: typeProducts, b: typeProducts) => b.price_in_cents - a.price_in_cents)
     }
     if (priority === "lower-price") {
-        return products.sort((a: any, b: any) => a.price_in_cents - b.price_in_cents)
+        return products.sort((a: typeProducts, b: typeProducts) => a.price_in_cents - b.price_in_cents)
     }
     if (priority === "newest") {
-        return products.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+        return products.sort((a: typeProducts, b: typeProducts) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
     }
     return products
 }
