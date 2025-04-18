@@ -8,13 +8,15 @@ import Image from "next/image"
 
 const Container = styled.div`
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     flex-direction: column;
 
     section {
         display: flex;
         justify-content: center;
+        flex-direction: column;
+        align-items: center;
         width: 100%;
         gap: 32px;
         margin-top: 24px;
@@ -41,6 +43,20 @@ const Container = styled.div`
                 align-items: center;
                 justify-content: center;
                 gap: 8px;
+            }
+        }
+
+        img {
+            width: auto;
+            max-width: 500px;
+        }
+
+        @media (min-width: ${props => props.theme.phoneBP}){
+            flex-direction: row;
+
+            img {
+                width: 100%;
+                height: auto;
             }
         }
     }
