@@ -13,23 +13,18 @@ interface CartItemProps {
 
 const Container = styled.li`
     display: flex;
+    flex-direction: column;
+
     align-items: center;
     justify-content: center;
-    height: 210px;
+    height: auto;
 
     border-radius: 8px;
     background-color: white;
-    
-    position: relative;
 
-    button {
-        position: absolute;
-        top: 16px;
-        right: 24px;
-
-        border: none;
-        background: transparent;
-        cursor: pointer;
+    > img {
+        border-end-end-radius: 10px;
+        border-end-start-radius: 10px;
     }
 
     > div {
@@ -43,9 +38,19 @@ const Container = styled.li`
         line-height: 150%;
         color: var(--text-dark-2);
 
-        h4 {
-            font-weight: 300;
-            font-size: 20px;
+        div {
+            button {
+                top: 16px;
+                right: 24px;
+
+                border: none;
+                background: transparent;
+                cursor: pointer;
+            }
+            h4 {
+                font-weight: 300;
+                font-size: 20px;
+            }
         }
 
         p {
@@ -69,6 +74,14 @@ const Container = styled.li`
             }
         }
     }
+    
+    @media (min-width: ${props => props.theme.phoneBP}) {
+        flex-direction: row;
+        > img {
+        border-end-end-radius: 0px;
+        border-end-start-radius: 0px;
+    }
+    }
 `
 
 const SelectQuantity = styled.select`
@@ -87,9 +100,6 @@ export function CartItem({ product, handleUpdateQuantity, handleDelete }: CartIt
     }
     return (
         <Container>
-            <button onClick={() => handleDelete(product.id)} aria-label="Deletar">
-                <DeleteIcon />
-            </button>
             <Image
                 alt={product.name}
                 width={256}
@@ -97,7 +107,12 @@ export function CartItem({ product, handleUpdateQuantity, handleDelete }: CartIt
                 src={product.image_url}
             />
             <div>
-                <h4>{product.name}</h4>
+                <div>
+                    <h4>{product.name}</h4>
+                    <button onClick={() => handleDelete(product.id)} aria-label="Deletar">
+                        <DeleteIcon />
+                    </button>
+                </div>
                 <p>{product.description}</p>
                 <div>
                     <SelectQuantity value={product.quantity} onChange={handleChange}>
